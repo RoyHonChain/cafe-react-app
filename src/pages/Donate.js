@@ -1,4 +1,4 @@
-import abi from './utils/BuyMeACoffee.json';
+import abi from '../utils/BuyMeACoffee.json';
 import { useEffect, useState } from "react";
 const { ethers } = require("ethers");
 

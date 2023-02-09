@@ -1,6 +1,8 @@
+import { HashRouter, NavLink, Routes, Route } from "react-router-dom";
+
 function TopHeader({currentAccount,setCurrentAccount}) {
-  const btnClassName=`px-4 h-9 rounded-lg border font-medium text-base text-white bg-black cursor-pointer`;
-  const textbtnClassName=`font-medium text-base-2 cursor-pointer`;
+  const btnClassName=`px-4 h-9 rounded-lg border font-medium text-base-2 text-white bg-black cursor-pointer`;
+  
 
   const connectWallet = async () => {
     try {
@@ -23,10 +25,11 @@ function TopHeader({currentAccount,setCurrentAccount}) {
   return (
     <div className='TopHeader'>
         <div className='ToolBar'>
-          <a className={textbtnClassName} >Donate</a>
-          <a className={textbtnClassName}>Casino</a>
-          <a className={textbtnClassName}>Art</a>
-          <a className={textbtnClassName}>About</a>
+          <NavLink to="/Home" className="textNavBtn">Home</NavLink>
+          <NavLink to="/Donate" className="textNavBtn">Donate</NavLink>
+          <NavLink to="/Casino" className="textNavBtn">Casino</NavLink>
+          <NavLink to="/Art" className="textNavBtn">Art</NavLink>
+          <NavLink to="/About" className="textNavBtn">About</NavLink>
         </div>
         
         <div className='WebsiteLogo'>

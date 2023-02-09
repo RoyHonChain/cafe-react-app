@@ -1,14 +1,18 @@
 .App{
+  width: 100vw;
   display: flex;
   flex-direction: column;
+  align-items: center;
   gap:2rem;
 }
 
 .TopHeader{
+  width: calc(95%);
+  
   display: flex;
   justify-content:space-between;
   align-items: center;
-  padding: 1rem 2rem;
+  padding: 1rem;
   gap: 2rem;
 }
 
@@ -17,7 +21,7 @@
   width: 33.333333%;
   
   display: flex;
-  gap: 1.2rem;
+  gap: 1.45rem;
   align-items: center;
 }
 
@@ -135,7 +139,7 @@ textarea{
 }
 
 .text-base-2 {
-  font-size: 1.15rem;
+  font-size: 1.2rem;
 }
 
 .font-medium {
@@ -147,5 +151,39 @@ textarea{
 }
 
 .text-center{
+  text-align: center;
+}
+
+.textNavBtn{
+  text-decoration:none;
+  color: black;
+  font-weight: 500;
+  font-size: 1.2rem;
+  cursor: pointer;
+}
+
+.textNavBtn:visited{
+  text-decoration:none;
+  color: black;
+}
+
+.textNavBtn:hover{
+  text-decoration:line-through;
+  color: black;
+}
+
+
+.Home{
+  width: 50vw;
+  display: flex;
+  flex-direction: column;
+  align-items:center;
+}
+
+.Home img{
+  width: 77%;
+}
+
+.Home h1{
   text-align: center;
 }
