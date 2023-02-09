@@ -1,9 +1,9 @@
-import soon from '../images/soon.png';
+import about from '../images/about.png';
 function About() {
   return (
     <div className='Home'>
-        <h1>About Page Soon</h1>
-        <img src={soon} />
+        <h1>About Page Soon...</h1>
+        <img src={about} />
     </div>
   );
 }

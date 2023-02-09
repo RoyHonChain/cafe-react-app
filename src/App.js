@@ -21,8 +21,8 @@ function App() {
         />
 
         <Routes>
+          <Route path="/" element={ <Home /> } />
           <Route path="/Donate" element={ <Donate currentAccount={currentAccount} setCurrentAccount={setCurrentAccount} /> } />
-          <Route path="/Home" element={ <Home /> } />
           <Route path="/Casino" element={ <Casino /> } />
           <Route path="/Art" element={ <Art /> } />
           <Route path="/About" element={ <About /> } />

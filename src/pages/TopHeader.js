@@ -25,11 +25,11 @@ function TopHeader({currentAccount,setCurrentAccount}) {
   return (
     <div className='TopHeader'>
         <div className='ToolBar'>
-          <NavLink to="/Home" className="textNavBtn">Home</NavLink>
-          <NavLink to="/Donate" className="textNavBtn">Donate</NavLink>
-          <NavLink to="/Casino" className="textNavBtn">Casino</NavLink>
-          <NavLink to="/Art" className="textNavBtn">Art</NavLink>
-          <NavLink to="/About" className="textNavBtn">About</NavLink>
+          <NavLink to="/" className={({isActive})=>['textNavBtn',isActive ? 'router-link-active' : null].join(' ')}>Home</NavLink>
+          <NavLink to="/Donate" className={({isActive})=>['textNavBtn',isActive ? 'router-link-active' : null].join(' ')}>Donate</NavLink>
+          <NavLink to="/Casino" className={({isActive})=>['textNavBtn',isActive ? 'router-link-active' : null].join(' ')}>Casino</NavLink>
+          <NavLink to="/Art" className={({isActive})=>['textNavBtn',isActive ? 'router-link-active' : null].join(' ')}>Art</NavLink>
+          <NavLink to="/About" className={({isActive})=>['textNavBtn',isActive ? 'router-link-active' : null].join(' ')}>About</NavLink>
         </div>
         
         <div className='WebsiteLogo'>
