@@ -9,6 +9,7 @@ function Casino() {
   const plusBtn=`game-btn game-btn-plus`;
   const minusBtn=`game-btn game-btn-minus`;
   const betBtn=`game-btn game-btn-bet`;
+  const submmitBtn=`game-btn game-btn-submmit`;
 
 
   return (
@@ -38,6 +39,12 @@ function Casino() {
             <div className={betBtn}>50 $R</div>
             <div className={betBtn}>100 $R</div>
         </div>
+
+        <div className='BetRow'>
+            <div className={submmitBtn}>Double! or Nothing!</div>
+        </div>
+
+
 
     </div>
   );
