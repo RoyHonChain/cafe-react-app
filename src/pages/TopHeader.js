@@ -1,7 +1,8 @@
 import { HashRouter, NavLink, Routes, Route } from "react-router-dom";
 
 function TopHeader({currentAccount,setCurrentAccount}) {
-  const btnClassName=`px-4 h-9 rounded-lg border font-medium text-base-2 text-white bg-black cursor-pointer`;
+  const connectWalletBtn=`px-4 h-9 rounded-lg border font-medium text-base text-white bg-black cursor-pointer`;
+  const airdropTokenBtn=`px-4 h-9 rounded-lg border font-medium text-base bg-white cursor-pointer`;
   
 
   const connectWallet = async () => {
@@ -37,7 +38,8 @@ function TopHeader({currentAccount,setCurrentAccount}) {
         </div>
         
         <div className='ConnectWallet'>
-          <button className={btnClassName} onClick={connectWallet}>{currentAccount?`${currentAccount.slice(0,7)}...`:"Connect Wallet"}</button>
+          <button className={airdropTokenBtn}>Airdrop 100$R</button>
+          <button className={connectWalletBtn} onClick={connectWallet}>{currentAccount?`${currentAccount.slice(0,7)}...`:"Connect Wallet"}</button>
         </div>
     </div>
   );
