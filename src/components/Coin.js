@@ -28,7 +28,7 @@ function Coin(props) {
         onPointerOut={(event) => {
           hover(false)
         }}>
-        <cylinderGeometry args={[2,2,0.4,100]}/>
+        <cylinderGeometry args={[2.2,2.2,0.5,100]}/>
         <meshBasicMaterial attach="material-0" map={edge} />
         <meshBasicMaterial attach="material-1" map={minus} />
         <meshBasicMaterial attach="material-2" map={plus} />

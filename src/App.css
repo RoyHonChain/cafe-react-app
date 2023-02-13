@@ -60,15 +60,15 @@
 }
 
 .GamePanel{
-  height: 220px;
-  width: 220px;
+  height: 200px;
+  width: 200px;
   cursor: pointer;
 }
 
 .PlusOrMinus{
   min-width: 300px;
   display: flex;
-  justify-content: space-between;
+  justify-content:center;
 }
 
 .BetRow{
@@ -80,6 +80,7 @@
 .game-btn {
   border-radius: 5px;
   padding: 15px 25px;
+  font-weight: 500;
   text-decoration: none;
   color: #000000;
   position: relative;
@@ -96,6 +97,7 @@
   cursor: pointer;
 }
 
+
 .game-btn:active {
   transform: translate(0px, 5px);
   -webkit-transform: translate(0px, 5px);
@@ -107,23 +109,24 @@
   color: #ffffff;
   background-color: #000000;
   
-  height: 25px;
-  width:69px;
-  font-size: 25px;
+  height: 28px;
+  width:72px;
+  font-size: 30px;
   font-weight: 600;
-  margin: 20px 20px 37px 20px;
+  margin: 20px 20px 20px 20px;
 }
+
 
 .game-btn-minus {
   
   background-color: #ebeef0;
   
   color: #000000;
-  height: 25px;
-  width:69px;
-  font-size: 25px;
+  height: 28px;
+  width:72px;
+  font-size: 30px;
   font-weight: 600;
-  margin: 20px 20px 37px 20px;
+  margin: 20px 20px 20px 20px;
 }
 
 .game-btn-bet{
@@ -134,15 +137,34 @@
   height: 20px;
 }
 
-.game-btn-submmit{
-  background-color: #dce2c1;
-  margin: 12px 20px;
-  font-size: 18px;
-  width:169px;
-  margin-top: 25px;
+.BetInfo{
+  text-align: center;
+  font-size: 32px;
+  margin: 10px 0px 0px 0px;
+}
+.BetInfo a{
+  font-size: 22px;
+  font-weight: 500;
+  color: black;
+  
 }
 
+.game-btn-submmit{
+  background-color: #dce2c1;
+  margin: 25px;
+  font-size: 18px;
+  width:169px;
+}
 
+.Reveal{
+  text-align: center;
+  margin: 20px 0px 0px 0px;
+}
+
+.Reveal div{
+  margin-top: 5px;
+  font-size: 18px;
+}
 
 
 
@@ -281,6 +303,13 @@ textarea{
 
 .cursor-pointer {
   cursor: pointer;
+}
+
+.cant-select{
+  -webkit-user-select:none;
+  -moz-user-select:none;
+  -o-user-select:none;
+  user-select:none;
 }
 
 .text-center{

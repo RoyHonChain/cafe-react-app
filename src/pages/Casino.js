@@ -2,19 +2,20 @@ import casino from '../images/casino.png';
 import { Canvas, useFrame , useLoader} from '@react-three/fiber'
 import { TextureLoader } from 'three/src/loaders/TextureLoader'
 import Coin from '../components/Coin';
+import { useState } from 'react';
+import BetPanel from '../components/BetPanel';
+import Reveal from '../components/Reveal';
 
 
 function Casino() {
-  
-  const plusBtn=`game-btn game-btn-plus`;
-  const minusBtn=`game-btn game-btn-minus`;
-  const betBtn=`game-btn game-btn-bet`;
-  const submmitBtn=`game-btn game-btn-submmit`;
+
+  const [stage,setStage]=useState(0);
+  const [msg,setMsg]=useState("Welcom~ Good to see you ...");
 
 
   return (
     <div className='Casino'>
-        <div className="banner-text">Gamble Not Good! but...</div>
+        <div className="banner-text">Gambling Not Good! but...</div>
         <div className='GamePanel'>
           <Canvas camera={{position:[0,7,-2.2],fov:50,rotation:[-0.6*Math.PI,0,0]}}  >
             <ambientLight intensity={0.5} />
@@ -23,29 +24,9 @@ function Casino() {
             <Coin position={[0, 0, 0]}/>
           </Canvas>
         </div>
-        <div className='PlusOrMinus'>
-            <div className={plusBtn}>+</div>
-            <div className={minusBtn}>-</div>
-        </div>
-
-        <div className='BetRow'>
-            <div className={betBtn}>1 $R</div>
-            <div className={betBtn}>5 $R</div>
-            <div className={betBtn}>10 $R</div>
-        </div>
-
-        <div className='BetRow'>
-            <div className={betBtn}>25 $R</div>
-            <div className={betBtn}>50 $R</div>
-            <div className={betBtn}>100 $R</div>
-        </div>
-
-        <div className='BetRow'>
-            <div className={submmitBtn}>Double! or Nothing!</div>
-        </div>
-
-
-
+        <div className='BetInfo'>&#129399;: <a>{msg}</a> </div>
+        { (stage==0) && <BetPanel setStage={setStage} setMsg={setMsg}></BetPanel>}
+        { (stage>=1) && <Reveal stage={stage} setStage={setStage} setMsg={setMsg}></Reveal>} 
     </div>
   );
 }
