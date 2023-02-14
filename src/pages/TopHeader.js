@@ -1,9 +1,36 @@
+import { useRef, useState,useEffect } from "react";
 import { HashRouter, NavLink, Routes, Route } from "react-router-dom";
+import abi from '../utils/Airdrop.json';
+const { ethers } = require("ethers");
 
 function TopHeader({currentAccount,setCurrentAccount}) {
   const connectWalletBtn=`px-4 h-9 rounded-lg border font-medium text-base text-white bg-black cursor-pointer cant-select`;
   const airdropTokenBtn=`px-4 h-9 rounded-lg border font-medium text-base bg-white cursor-pointer cant-select`;
   
+  const [walletConnected,setWalletConnected] = useState(false);
+
+  const airdropContractAddress = "0x7d42973D25c3ECF48075c9E8881b4424148e38B4";
+  const contractABI = abi;
+
+  const isWalletConnected = async () => {
+    try {
+        const { ethereum } = window;
+
+        const accounts = await ethereum.request({method: 'eth_accounts'})
+        console.log("accounts: ", accounts);
+
+        if (accounts.length > 0) {
+            const account = accounts[0];
+            setWalletConnected(true);
+            console.log("wallet is connected! " + account);
+        } else {
+            setWalletConnected(false);
+            console.log("make sure MetaMask is connected");
+        }
+    } catch (error) {
+        console.log("error: ", error);
+    }
+  }
 
   const connectWallet = async () => {
     try {
@@ -21,7 +48,48 @@ function TopHeader({currentAccount,setCurrentAccount}) {
     } catch (error) {
       console.log(error);
     }
+
+    isWalletConnected();
   }
+
+  const airdropToken = async ()=>{
+    console.log("airdrop!");
+    console.log("connected?",walletConnected);
+
+    try {
+      
+      const {ethereum} = window;
+      
+      if (ethereum) {
+        
+        const provider = new ethers.providers.Web3Provider(ethereum, "any");
+        
+        const signer = provider.getSigner();
+        
+        const airdrop = new ethers.Contract(
+          airdropContractAddress,
+          contractABI,
+          signer
+        );
+        
+        console.log("request airdrop...")
+        const airdropTxn = await airdrop.airdrop();
+
+        await airdropTxn.wait();
+
+        console.log("mined ", airdropTxn.hash);
+
+        console.log("Airdroped 100$R to you");
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+
+  useEffect(()=>{
+    connectWallet();
+  },[]);
 
   return (
     <div className='TopHeader'>
@@ -38,7 +106,7 @@ function TopHeader({currentAccount,setCurrentAccount}) {
         </div>
         
         <div className='ConnectWallet'>
-          <button className={airdropTokenBtn}>Airdrop 100$R</button>
+          <button className={airdropTokenBtn} disabled={walletConnected?false:true} onClick={airdropToken} >Airdrop 100$R</button>
           <button className={connectWalletBtn} onClick={connectWallet}>{currentAccount?`${currentAccount.slice(0,7)}...`:"Connect Wallet"}</button>
         </div>
     </div>

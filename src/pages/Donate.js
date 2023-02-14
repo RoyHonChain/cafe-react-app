@@ -68,7 +68,6 @@ function Donate({currentAccount,setCurrentAccount}) {
         }
     };
     
-    
     // Function to fetch all memos stored on-chain.
     const getMemos = async () => {
         try {
@@ -136,8 +135,6 @@ function Donate({currentAccount,setCurrentAccount}) {
         }
       }, [currentAccount]);
     
-
-
     return (
     <div className='Donate'>
         

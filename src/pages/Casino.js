@@ -10,7 +10,7 @@ import Reveal from '../components/Reveal';
 function Casino() {
 
   const [stage,setStage]=useState(0);
-  const [msg,setMsg]=useState("Welcom~ Good to see you ...");
+  const [msg,setMsg]=useState("Welcome~ Good to see you ...");
 
 
   return (
