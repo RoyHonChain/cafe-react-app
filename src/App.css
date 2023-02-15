@@ -35,7 +35,7 @@
 }
 
 .ConnectWallet{
-  
+  position: relative;
   width: 33.333333%;
 
   display: flex;
@@ -44,16 +44,23 @@
   gap: 0.7rem;
 }
 
+.playerBalance{
+  position:absolute;
+  top:50px;
+  right: 0px;
 
+  font-size: 1.15rem;
+}
 
 .Casino{
-  width: 50vw;
-  max-width: 1000px;
+  width: 100%;
   margin: auto;
   display: flex;
   flex-direction: column;
   align-items: center;  
 }
+
+
 
 .Casino .banner-text{
   min-width: 250px;
@@ -96,6 +103,9 @@
   cursor: pointer;
 }
 
+.game-btn:hover {
+  background-color: rgba(255, 215, 0, 0.25);
+}
 
 .game-btn:active {
   transform: translate(0px, 5px);
@@ -114,7 +124,6 @@
   font-weight: 600;
   margin: 16px 0px;
 }
-
 
 .game-btn-minus {
   
