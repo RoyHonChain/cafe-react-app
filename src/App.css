@@ -83,6 +83,13 @@
   justify-content: space-around;
 }
 
+.CommitRow{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
 .game-btn {
   border-radius: 5px;
   padding: 15px 25px;
@@ -125,6 +132,10 @@
   margin: 16px 0px;
 }
 
+.game-btn-plus:hover{
+  color: #000000;
+}
+
 .game-btn-minus {
   
   background-color: #ebeef0;
@@ -140,28 +151,38 @@
 .game-btn-bet{
   background-color: #edf3f7;
   margin: 8px 8px;
-  font-size: 16px;
+  font-size: 17px;
   width:55px;
   height: 20px;
 }
 
 .BetInfo{
-  text-align: center;
-  font-size: 32px;
+  font-family: monospace;
+  font-size: 30px;
+  border-right: 3px solid;
+  animation: blink .5s step-end infinite alternate;
   margin: 10px 0px 0px 0px;
 }
+
+@keyframes blink {
+  50% {
+    border-color: transparent
+  }
+}
+
 .BetInfo a{
-  font-size: 22px;
+  font-size: 28px;
   font-weight: 500;
   color: black;
   
 }
 
-.game-btn-submmit{
+.game-btn-commit{
   background-color: #dce2c1;
   margin: 16px 0px;
-  font-size: 18px;
+  font-size: 20px;
   width:297px;
+  text-align:center;
 }
 
 .Reveal{
@@ -170,8 +191,15 @@
 }
 
 .Reveal div{
-  margin-top: 5px;
+  margin-top: 10px;
   font-size: 18px;
+}
+
+.Reveal .game-btn-reveal{
+  background-color: #dce2c1;
+  margin: 16px 0px;
+  font-size: 20px;
+  width:180px;
 }
 
 
@@ -361,3 +389,4 @@ textarea{
 .Home h1{
   text-align: center;
 }
+

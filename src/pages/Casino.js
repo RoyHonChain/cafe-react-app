@@ -2,16 +2,71 @@ import casino from '../images/casino.png';
 import { Canvas, useFrame , useLoader} from '@react-three/fiber'
 import { TextureLoader } from 'three/src/loaders/TextureLoader'
 import Coin from '../components/Coin';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import BetPanel from '../components/BetPanel';
 import Reveal from '../components/Reveal';
+import ninjaFlipJson from '../utils/NinjaFlip.json';
+const { ethers } = require("ethers");
 
 
-function Casino() {
+function Casino({walletConnected,isWalletConnected,getRamblingBalance,setRamblingBalance,currentAccount}) {
 
-  const [stage,setStage]=useState(0);
-  const [msg,setMsg]=useState("Welcome~ Good to see you ...");
+  const [playerState,setPlayerState]=useState(0);
+  const [choose,setChoose]=useState("0");
+  const [amount,setAmount]=useState("1");
+  const [msg,setMsg]=useState(`Welcome~ Good to see you...`);
 
+  const ninjaFlipContractAddress = "0x36B8607c7299480D44E556C55675933766576309";
+  const ninjaFlipAbi=ninjaFlipJson.abi;
+
+
+  const getGame = async ()=>{
+
+    try {
+      
+      const {ethereum} = window;
+      
+      if (ethereum) {
+        const provider = new ethers.providers.Web3Provider(ethereum, "any");
+        const signer = provider.getSigner();
+        const ninjaFlip = new ethers.Contract(
+          ninjaFlipContractAddress,
+          ninjaFlipAbi,
+          signer
+        );
+
+        const accounts = await ethereum.request({
+          method: 'eth_requestAccounts'
+        });
+        const game = await ninjaFlip.playerRec(accounts[0]);
+        return game;
+        
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  const getPlayerState = async ()=>{
+    const game = await getGame();
+    const gameState = game[3]
+    console.log("game state=",gameState);
+    console.log(typeof(gameState));
+    return gameState;
+  }
+
+  useEffect(()=>{    
+    async function initPlayerState(){
+      if(!(await isWalletConnected())){
+        setMsg('Please connect the wallet...');
+      }
+      else{
+        setPlayerState(await getPlayerState());
+        setMsg(`Welcome~ Good to see you...`);
+      }
+    }
+    initPlayerState();
+  },[currentAccount]);
 
   return (
     <div className='Casino'>
@@ -24,9 +79,38 @@ function Casino() {
             <Coin position={[0, 0, 0]}/>
           </Canvas>
         </div>
-        <div className='BetInfo'>&#129399;: <a>{msg}</a> </div>
-        { (stage==0) && <BetPanel setStage={setStage} setMsg={setMsg}></BetPanel>}
-        { (stage>=1) && <Reveal stage={stage} setStage={setStage} setMsg={setMsg}></Reveal>} 
+        <div className='BetInfo'> &#129399;: <a>{msg}</a> </div>
+        
+        
+        { walletConnected
+        ?
+        ((playerState!=1) && <BetPanel 
+          setPlayerState={setPlayerState} 
+          setMsg={setMsg}
+          choose={choose}
+          setChoose={setChoose}
+          amount={amount}
+          setAmount={setAmount}
+          getRamblingBalance={getRamblingBalance}
+          getPlayerState={getPlayerState}
+          setRamblingBalance={setRamblingBalance}
+          currentAccount={currentAccount}
+          >
+          </BetPanel>)
+          :
+          <div></div>
+          }
+
+
+        { (playerState==1) && <Reveal 
+          getPlayerState={getPlayerState} 
+          setMsg={setMsg}
+          getGame={getGame}
+          setPlayerState={setPlayerState} 
+          getRamblingBalance={getRamblingBalance} 
+          setRamblingBalance={setRamblingBalance} 
+          >
+          </Reveal>} 
     </div>
   );
 }
