@@ -42,7 +42,7 @@ function TopHeader({walletConnected,connectWallet,currentAccount,setCurrentAccou
         const airdropTxn = await airdrop.airdrop();
 
         await airdropTxn.wait();
-        setRamblingBalance(await getRamblingBalance());
+        setRamblingBalance(ethers.utils.formatEther(await getRamblingBalance()));
         console.log("mined ", airdropTxn.hash);
 
         console.log("Airdroped 100$R to you");
