@@ -15,7 +15,7 @@ function Casino({walletConnected,isWalletConnected,getRamblingBalance,setRamblin
   const [choose,setChoose]=useState("0");
   const [amount,setAmount]=useState("1");
   const [msg,setMsg]=useState(`Welcome~ Good to see you...`);
-  const [txProgress,setTxProgress] = useState("xxxxxx");
+  const [txProgress,setTxProgress] = useState("");
   const [isWaiting,setIsWaiting] = useState(false);
 
   const ninjaFlipContractAddress = "0x71C2Fd7d36b4484E172286f40fEf5e21E4DBd85d";

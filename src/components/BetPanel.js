@@ -55,8 +55,7 @@ function BetPanel({txProgress,setTxProgress,isWaiting,setIsWaiting,currentAccoun
               console.log("allowance=",allowance)
               setTxProgress("got allowance");
               if(allowance.lt(ethers.utils.parseEther(amount))){
-                console.log(allowance);
-                console.log(BigNumber.from(amount));
+                
                 setTxProgress("allowance not enough");
                 const getApprove = await erc20Token.approve(ninjaFlipContractAddress,"0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff");
                 setTxProgress("getting approve please wait...");
@@ -85,10 +84,21 @@ function BetPanel({txProgress,setTxProgress,isWaiting,setIsWaiting,currentAccoun
               signer
             );
             await checkAllowance();
+            
+            const bal = await getRamblingBalance();
+            const betAmount = ethers.utils.parseEther(amount);
+            
+            if(bal.lt(betAmount)){
+              setMsg("You don't have enough $R...");
+              setTxProgress("You don't have enough $R...,refresh and click airdrop to get some!");
+              return;
+            }
+
+
             console.log("commiting bet...")
             setTxProgress("commiting bet...");
 
-            const flipTxn = await ninjaFlip.commitBet(choose,ethers.utils.parseEther(amount));
+            const flipTxn = await ninjaFlip.commitBet(choose,betAmount);
             setIsWaiting(true);
             setTxProgress("waiting Tx mined...");
             
