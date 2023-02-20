@@ -1,23 +1,23 @@
 import { useState } from 'react';
 import ninjaFlipJson from '../utils/NinjaFlip.json';
-import erc20Json from '../utils/RamblingERC20.json'
+import erc20Abi from '../utils/RamblingERC20.json'
 const { ethers, BigNumber } = require("ethers");
 
 
-function BetPanel({currentAccount,setMsg,choose,setChoose,amount,setAmount,getRamblingBalance,getPlayerState,setPlayerState,setRamblingBalance}){
+function BetPanel({txProgress,setTxProgress,isWaiting,setIsWaiting,currentAccount,setMsg,choose,setChoose,amount,setAmount,getRamblingBalance,getPlayerState,setPlayerState,setRamblingBalance}){
 
     const plusBtn=`game-btn game-btn-plus`;
     const minusBtn=`game-btn game-btn-minus`;
     const betBtn=`game-btn game-btn-bet`;
     const commitBtn=`game-btn game-btn-commit`;
 
-    const ninjaFlipContractAddress = "0x36B8607c7299480D44E556C55675933766576309";
+    const ninjaFlipContractAddress = "0x71C2Fd7d36b4484E172286f40fEf5e21E4DBd85d";
     const ninjaFlipAbi=ninjaFlipJson.abi;
 
-    const erc20ContractAddress = "0x2F2d82Da4c49806659e01fD03B091F0d265cb80e";
-    const erc20Abi = erc20Json;
+    const ramblingTokenAddress = "0x2F2d82Da4c49806659e01fD03B091F0d265cb80e";
+    const ramblingTokenABI = erc20Abi;
 
-    const [txProgress,setTxProgress] = useState("");
+    
 
     function clickChoose(c){
         setChoose(c);
@@ -43,8 +43,8 @@ function BetPanel({currentAccount,setMsg,choose,setChoose,amount,setAmount,getRa
               const provider = new ethers.providers.Web3Provider(ethereum, "any");
               const signer = provider.getSigner();
               const erc20Token = new ethers.Contract(
-                erc20ContractAddress,
-                erc20Abi,
+                ramblingTokenAddress,
+                ramblingTokenABI,
                 signer
               );
       
@@ -59,9 +59,11 @@ function BetPanel({currentAccount,setMsg,choose,setChoose,amount,setAmount,getRa
                 console.log(BigNumber.from(amount));
                 setTxProgress("allowance not enough");
                 const getApprove = await erc20Token.approve(ninjaFlipContractAddress,"0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff");
-                setTxProgress("getting approve...");
+                setTxProgress("getting approve please wait...");
+                setIsWaiting(true);
+                
                 await getApprove.wait();
-                setTxProgress("got approve!");
+                setTxProgress("approved!");
               }
               
             }
@@ -87,14 +89,14 @@ function BetPanel({currentAccount,setMsg,choose,setChoose,amount,setAmount,getRa
             setTxProgress("commiting bet...");
 
             const flipTxn = await ninjaFlip.commitBet(choose,ethers.utils.parseEther(amount));
+            setIsWaiting(true);
             setTxProgress("waiting Tx mined...");
-            await flipTxn.wait();
             
-            console.log("Tx mined ", flipTxn.hash);
-    
+            await flipTxn.wait();
             console.log("bet commited!");
             setTxProgress("bet commited!");
             setPlayerState(await getPlayerState());
+            setIsWaiting(false);
             setRamblingBalance(ethers.utils.formatEther(await getRamblingBalance()));
           }
         } catch (error) {
@@ -104,27 +106,34 @@ function BetPanel({currentAccount,setMsg,choose,setChoose,amount,setAmount,getRa
 
     return(
         <div className='BetPanel'>
-          <div className='PlusOrMinus'>
-              <div className={plusBtn} onClick={()=>clickChoose(0)}>+</div>
-              <div className={minusBtn} onClick={()=>clickChoose(1)}>-</div>
-          </div>
+          {
+            !isWaiting
+            ?
+            <div>
+            <div className='PlusOrMinus'>
+                <div className={plusBtn} onClick={()=>clickChoose(0)}>+</div>
+                <div className={minusBtn} onClick={()=>clickChoose(1)}>-</div>
+            </div>
 
-          <div className='BetRow'>
-              <div className={betBtn} onClick={()=>clickAmount("1")} >1 $R</div>
-              <div className={betBtn} onClick={()=>clickAmount("5")} >5 $R</div>
-              <div className={betBtn} onClick={()=>clickAmount("10")} >10 $R</div>
-          </div>
+            <div className='BetRow'>
+                <div className={betBtn} onClick={()=>clickAmount("1")} >1 $R</div>
+                <div className={betBtn} onClick={()=>clickAmount("5")} >5 $R</div>
+                <div className={betBtn} onClick={()=>clickAmount("10")} >10 $R</div>
+            </div>
 
-          <div className='BetRow'>
-              <div className={betBtn} onClick={()=>clickAmount("25")} >25 $R</div>
-              <div className={betBtn} onClick={()=>clickAmount("50")} >50 $R</div>
-              <div className={betBtn} onClick={()=>clickAmount("100")} >100 $R</div>
-          </div>
-          <div className='CommitRow'>
-              <div className={commitBtn} onClick={()=>commitBet()}>Double Or Nothing</div>
-              <div>{txProgress}</div>
-          </div>
-
+            <div className='BetRow'>
+                <div className={betBtn} onClick={()=>clickAmount("25")} >25 $R</div>
+                <div className={betBtn} onClick={()=>clickAmount("50")} >50 $R</div>
+                <div className={betBtn} onClick={()=>clickAmount("100")} >100 $R</div>
+            </div>
+            <div className='CommitRow'>
+                <div className={commitBtn} onClick={()=>commitBet()}>Double Or Nothing</div>
+                <div className='Tax'>tax = 5%</div>
+            </div>
+            </div>
+            :
+            <div className='TxProgress'>{txProgress}</div>
+          }
         </div>
     )
 }

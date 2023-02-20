@@ -7,16 +7,8 @@ function TopHeader({walletConnected,connectWallet,currentAccount,setCurrentAccou
   const connectWalletBtn=`px-4 h-9 rounded-lg border font-medium text-base text-white bg-black cursor-pointer cant-select`;
   const airdropTokenBtn=`px-4 h-9 rounded-lg border font-medium text-base bg-white cursor-pointer cant-select`;
   
-  
-
   const airdropContractAddress = "0x7d42973D25c3ECF48075c9E8881b4424148e38B4";
   const airdropContractABI = airdropAbi;
-
-
-
-
-
-
 
   const airdropToken = async ()=>{
     console.log("airdrop!");

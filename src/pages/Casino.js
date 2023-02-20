@@ -15,8 +15,10 @@ function Casino({walletConnected,isWalletConnected,getRamblingBalance,setRamblin
   const [choose,setChoose]=useState("0");
   const [amount,setAmount]=useState("1");
   const [msg,setMsg]=useState(`Welcome~ Good to see you...`);
+  const [txProgress,setTxProgress] = useState("xxxxxx");
+  const [isWaiting,setIsWaiting] = useState(false);
 
-  const ninjaFlipContractAddress = "0x36B8607c7299480D44E556C55675933766576309";
+  const ninjaFlipContractAddress = "0x71C2Fd7d36b4484E172286f40fEf5e21E4DBd85d";
   const ninjaFlipAbi=ninjaFlipJson.abi;
 
 
@@ -95,6 +97,10 @@ function Casino({walletConnected,isWalletConnected,getRamblingBalance,setRamblin
           getPlayerState={getPlayerState}
           setRamblingBalance={setRamblingBalance}
           currentAccount={currentAccount}
+          txProgress={txProgress}
+          setTxProgress={setTxProgress}
+          isWaiting={isWaiting}
+          setIsWaiting={setIsWaiting}
           >
           </BetPanel>)
           :
@@ -109,6 +115,10 @@ function Casino({walletConnected,isWalletConnected,getRamblingBalance,setRamblin
           setPlayerState={setPlayerState} 
           getRamblingBalance={getRamblingBalance} 
           setRamblingBalance={setRamblingBalance} 
+          txProgress={txProgress}
+          setTxProgress={setTxProgress}
+          isWaiting={isWaiting}
+          setIsWaiting={setIsWaiting}
           >
           </Reveal>} 
     </div>
