@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@apollo/client": "^3.7.9",
     "@react-spring/three": "^9.6.1",
     "@react-three/fiber": "^8.11.0",
     "@testing-library/jest-dom": "^5.16.5",
@@ -10,6 +11,7 @@
     "@testing-library/user-event": "^13.5.0",
     "@types/three": "^0.149.0",
     "ethers": "^5.6.5",
+    "graphql": "^16.6.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.8.1",

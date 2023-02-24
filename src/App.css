@@ -215,27 +215,6 @@
 }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 .Donate{
   display: flex;
   flex-direction: column;
@@ -305,48 +284,36 @@ textarea{
   
 }
 
-
-
-
-.px-4{
+.ConnectWalletBtn{
   padding: 0 1rem;
-}
-
-.h-9{
   height: 2.5rem;
-}
-
-.rounded-lg {
   border-radius: 0.5rem;
-}
-
-.border {
   border-width: 1px;
-}
-
-.text-white {
-  color: rgb(255, 255, 255);
-}
-
-
-.bg-black {
-  background-color: rgb(0, 0, 0);
-}
-
-.bg-white {
-  background-color: rgb(255,255,255);
-}
-
-.text-base {
-  font-size: 1.1rem;
-}
-
-.text-base-2 {
-  font-size: 1.2rem;
-}
-
-.font-medium {
   font-weight: 500;
+  font-size: 1.1rem;
+  color: rgb(255, 255, 255);
+  background-color: rgb(0, 0, 0);
+  cursor: pointer;
+  -webkit-user-select:none;
+  -moz-user-select:none;
+  -o-user-select:none;
+  user-select:none;
+}
+
+.AirdropTokenBtn{
+  padding: 0 1rem;
+  height: 2.5rem;
+  border-radius: 0.5rem;
+  border-width: 1px;
+  font-weight: 500;
+  font-size: 1.1rem;
+  background-color: rgb(255,255,255);
+  cursor: pointer;
+  -webkit-user-select:none;
+  -moz-user-select:none;
+  -o-user-select:none;
+  user-select:none;
+
 }
 
 .cursor-pointer {
@@ -400,5 +367,52 @@ textarea{
 
 .Home h1{
   text-align: center;
+}
+
+.Blog{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+}
+
+.Post{
+  border: #000000;
+  border-style: solid;
+  border-radius: 0.5rem;
+  border-width: 1.5px;
+  padding: 8px;
+  margin-top: 1rem;
+  width: 600px;
+  gap: 50px;
+}
+
+.Blog .banner-text{
+  min-width: 250px;
+}
+
+.Profile{
+  display: flex;
+
+  width: 600px;
+  border-radius: 0.75rem;
+  
+  border: #000000;
+  border-style: solid;
+  border-radius: 0.5rem;
+  border-width: 1.5px;
+}
+
+.Photo img{
+  width: 12rem;
+  height: 100%;
+  max-width: 100%;
+  display: block;
+  
+}
+
+.Info{
+  padding: 8px;
+  
 }
 

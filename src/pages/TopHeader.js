@@ -4,8 +4,8 @@ import airdropAbi from '../utils/Airdrop.json';
 const { ethers } = require("ethers");
 
 function TopHeader({walletConnected,connectWallet,currentAccount,setCurrentAccount,ramblingBalance,setRamblingBalance,getRamblingBalance}) {
-  const connectWalletBtn=`px-4 h-9 rounded-lg border font-medium text-base text-white bg-black cursor-pointer cant-select`;
-  const airdropTokenBtn=`px-4 h-9 rounded-lg border font-medium text-base bg-white cursor-pointer cant-select`;
+  //const connectWalletBtn=`px-4 h-9 rounded-lg border font-medium text-base text-white bg-black cursor-pointer cant-select`;
+  //const airdropTokenBtn=`px-4 h-9 rounded-lg border font-medium text-base bg-white cursor-pointer cant-select`;
   
   const airdropContractAddress = "0x7d42973D25c3ECF48075c9E8881b4424148e38B4";
   const airdropContractABI = airdropAbi;
@@ -55,7 +55,7 @@ function TopHeader({walletConnected,connectWallet,currentAccount,setCurrentAccou
           <NavLink to="/Donate" className={({isActive})=>['textNavBtn',isActive ? 'router-link-active' : null].join(' ')}>Donate</NavLink>
           <NavLink to="/Casino" className={({isActive})=>['textNavBtn',isActive ? 'router-link-active' : null].join(' ')}>Casino</NavLink>
           <NavLink to="/Art" className={({isActive})=>['textNavBtn',isActive ? 'router-link-active' : null].join(' ')}>Art</NavLink>
-          <NavLink to="/About" className={({isActive})=>['textNavBtn',isActive ? 'router-link-active' : null].join(' ')}>About</NavLink>
+          <NavLink to="/Blog" className={({isActive})=>['textNavBtn',isActive ? 'router-link-active' : null].join(' ')}>Blog</NavLink>
         </div>
         
         <div className='WebsiteLogo'>
@@ -63,8 +63,8 @@ function TopHeader({walletConnected,connectWallet,currentAccount,setCurrentAccou
         </div>
         
         <div className='ConnectWallet'>
-          <button className={airdropTokenBtn} disabled={walletConnected?false:true} onClick={airdropToken} >Airdrop 100$R</button>
-          <button className={connectWalletBtn} onClick={connectWallet}>{currentAccount?`${currentAccount.slice(0,7)}...`:"Connect Wallet"}</button>
+          <button className='AirdropTokenBtn' disabled={walletConnected?false:true} onClick={airdropToken} >Airdrop 100$R</button>
+          <button className='ConnectWalletBtn' onClick={connectWallet}>{currentAccount?`${currentAccount.slice(0,7)}...`:"Connect Wallet"}</button>
           {walletConnected && <div className='playerBalance'>Balance: {ramblingBalance} $R</div>}
         </div>
     </div>

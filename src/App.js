@@ -4,7 +4,7 @@ import Donate from './pages/Donate';
 import Home from './pages/Home';
 import Casino from './pages/Casino';
 import Art from './pages/Art';
-import About from './pages/About';
+import Blog from './pages/Blog';
 import erc20Abi from './utils/RamblingERC20.json'
 
 import { useEffect, useState } from "react";
@@ -111,7 +111,7 @@ function App() {
           <Route path="/Donate" element={ <Donate currentAccount={currentAccount} setCurrentAccount={setCurrentAccount} /> } />
           <Route path="/Casino" element={ <Casino walletConnected={walletConnected} isWalletConnected={isWalletConnected} currentAccount={currentAccount} setRamblingBalance={setRamblingBalance} getRamblingBalance={getRamblingBalance}/> } />
           <Route path="/Art" element={ <Art /> } />
-          <Route path="/About" element={ <About /> } />
+          <Route path="/Blog" element={ <Blog /> } />
         </Routes>
       </div>
     </HashRouter>
