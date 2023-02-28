@@ -1,52 +1,47 @@
-import { useRef, useState,useEffect } from "react";
-import { HashRouter, NavLink, Routes, Route } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import airdropAbi from '../utils/Airdrop.json';
+
+import { ConnectButton } from '@rainbow-me/rainbowkit';
+import '@rainbow-me/rainbowkit/styles.css';
+
+import { usePrepareContractWrite, useContractWrite, useWaitForTransaction, useAccount} from 'wagmi'
+
 const { ethers } = require("ethers");
 
-function TopHeader({walletConnected,connectWallet,currentAccount,setCurrentAccount,ramblingBalance,setRamblingBalance,getRamblingBalance}) {
-  //const connectWalletBtn=`px-4 h-9 rounded-lg border font-medium text-base text-white bg-black cursor-pointer cant-select`;
-  //const airdropTokenBtn=`px-4 h-9 rounded-lg border font-medium text-base bg-white cursor-pointer cant-select`;
-  
+function TopHeader({ramblingBalance,setRamblingBalance,getRamblingBalance}) {
+
+  const {isConnected} = useAccount({
+    onConnect({ address, connector }) {
+      console.log('Connected', { address, connector })
+      refreshBalance();
+    },
+  });
+
+  //合約資訊
   const airdropContractAddress = "0x7d42973D25c3ECF48075c9E8881b4424148e38B4";
   const airdropContractABI = airdropAbi;
 
-  const airdropToken = async ()=>{
-    console.log("airdrop!");
-    console.log("connected?",walletConnected);
+  //與 airdrop 合約 互動設定
+  const { config } = usePrepareContractWrite({
+    address: airdropContractAddress,
+    abi: airdropContractABI,
+    functionName: 'airdrop',
+  })
+  const { data:airdropData, write:airdrop} = useContractWrite(config)
+  const { isLoading:txLoading, isSuccess:txSucess} = useWaitForTransaction({
+    hash: airdropData?.hash,
+    onSuccess(data) {
+      console.log('Success!', data)
+      refreshBalance();
+    },
+  })
 
-    try {
-      
-      const {ethereum} = window;
-      
-      if (ethereum) {
-        
-        const provider = new ethers.providers.Web3Provider(ethereum, "any");
-        
-        const signer = provider.getSigner();
-        
-        const airdrop = new ethers.Contract(
-          airdropContractAddress,
-          airdropContractABI,
-          signer
-        );
-        
-        console.log("request airdrop...")
-        const airdropTxn = await airdrop.airdrop();
-
-        await airdropTxn.wait();
-        setRamblingBalance(ethers.utils.formatEther(await getRamblingBalance()));
-        console.log("mined ", airdropTxn.hash);
-
-        console.log("Airdroped 100$R to you");
-      }
-    } catch (error) {
-      console.log(error);
-    }
+  const refreshBalance = async()=>{
+    console.log("refreshBalance");
+    const balance = ethers.utils.formatEther(await getRamblingBalance());
+    setRamblingBalance(balance);
+    console.log(balance);
   }
-
-  useEffect(()=>{
-    connectWallet();
-  },[]);
 
   return (
     <div className='TopHeader'>
@@ -63,9 +58,9 @@ function TopHeader({walletConnected,connectWallet,currentAccount,setCurrentAccou
         </div>
         
         <div className='ConnectWallet'>
-          <button className='AirdropTokenBtn' disabled={walletConnected?false:true} onClick={airdropToken} >Airdrop 100$R</button>
-          <button className='ConnectWalletBtn' onClick={connectWallet}>{currentAccount?`${currentAccount.slice(0,7)}...`:"Connect Wallet"}</button>
-          {walletConnected && <div className='playerBalance'>Balance: {ramblingBalance} $R</div>}
+          <button className='AirdropTokenBtn' disabled={isConnected?false:true} onClick={()=>{airdrop?.()}} >{txLoading ? "Airdroping..." : "Airdrop 100$R"}</button>
+          <ConnectButton showBalance={false} accountStatus="address"/>
+          {isConnected && <div className='playerBalance'>Balance: {ramblingBalance} $R</div>}
         </div>
     </div>
   );

@@ -37,7 +37,7 @@ export default function Profile(props) {
                 " (" + profile.name + ")"}
             </div>
 
-            <div>
+            <div className="Bio">
             {profile.bio}
             </div>
 

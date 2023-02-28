@@ -1,10 +1,15 @@
 import { useState } from 'react';
 import ninjaFlipJson from '../utils/NinjaFlip.json';
 import erc20Abi from '../utils/RamblingERC20.json'
+
+import { useAccount } from 'wagmi';
+
 const { ethers, BigNumber } = require("ethers");
 
 
-function BetPanel({txProgress,setTxProgress,isWaiting,setIsWaiting,currentAccount,setMsg,choose,setChoose,amount,setAmount,getRamblingBalance,getPlayerState,setPlayerState,setRamblingBalance}){
+function BetPanel({txProgress,setTxProgress,isWaiting,setIsWaiting,setMsg,choose,setChoose,amount,setAmount,getRamblingBalance,getPlayerState,setPlayerState,setRamblingBalance}){
+
+  const { address } = useAccount();
 
     const plusBtn=`game-btn game-btn-plus`;
     const minusBtn=`game-btn game-btn-minus`;
@@ -51,7 +56,7 @@ function BetPanel({txProgress,setTxProgress,isWaiting,setIsWaiting,currentAccoun
               console.log("checking allowance...")
               setTxProgress("checking allowance...");
 
-              const allowance = await erc20Token.allowance(currentAccount,ninjaFlipContractAddress);
+              const allowance = await erc20Token.allowance(address,ninjaFlipContractAddress);
               console.log("allowance=",allowance)
               setTxProgress("got allowance");
               if(allowance.lt(ethers.utils.parseEther(amount))){

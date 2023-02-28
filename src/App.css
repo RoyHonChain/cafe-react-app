@@ -267,6 +267,12 @@ textarea{
   cursor: pointer;
 }
 
+.ReceivedMemos{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
 .Memos{
   display: inline-flex;
   align-items: center;
@@ -274,6 +280,8 @@ textarea{
   flex-wrap: wrap;
   gap: 0.5rem;
   padding-top: 1rem;
+  max-width: 90%;
+  margin-bottom: 37px;
 }
 
 .Memo{
@@ -281,6 +289,8 @@ textarea{
   border-width: 1px;
   border-radius: 0.3rem;
   padding: 0.5rem;
+  width: 300px;
+  min-height: 152px;
   
 }
 
@@ -303,7 +313,6 @@ textarea{
 .AirdropTokenBtn{
   padding: 0 1rem;
   height: 2.5rem;
-  border-radius: 0.5rem;
   border-width: 1px;
   font-weight: 500;
   font-size: 1.1rem;
@@ -379,12 +388,10 @@ textarea{
 .Post{
   border: #000000;
   border-style: solid;
-  border-radius: 0.5rem;
   border-width: 1.5px;
   padding: 8px;
   margin-top: 1rem;
   width: 600px;
-  gap: 50px;
 }
 
 .Blog .banner-text{
@@ -394,25 +401,55 @@ textarea{
 .Profile{
   display: flex;
 
-  width: 600px;
-  border-radius: 0.75rem;
+  width: 616px;
   
   border: #000000;
   border-style: solid;
-  border-radius: 0.5rem;
   border-width: 1.5px;
+}
+
+.Photo{
+  flex:none;
 }
 
 .Photo img{
   width: 12rem;
   height: 100%;
   max-width: 100%;
-  display: block;
-  
 }
 
 .Info{
-  padding: 8px;
-  
+  flex: auto;
+  padding: 12px; 
 }
 
+.Handle{
+  color: #6366F1; 
+  font-size: 1.1rem;
+  line-height: 1.25rem; 
+  font-weight: 600; 
+  letter-spacing: 0.05em; 
+  text-transform: uppercase;
+}
+
+.Bio{
+  display: block; 
+  margin-top: 0.5rem; 
+  color: #000000; 
+  font-size: 1.1rem;
+  line-height: 1.25rem; 
+  font-weight: 500; 
+  line-height: 1.25; 
+}
+
+.Owner{
+  margin-top: 0.7rem; 
+  font-size: 0.9rem;
+  line-height: 1.25rem; 
+}
+
+.Follow{
+  margin-top: 0.7rem; 
+  font-size: 0.9rem;
+  line-height: 1rem; 
+}

@@ -1,15 +1,18 @@
-import casino from '../images/casino.png';
 import { Canvas, useFrame , useLoader} from '@react-three/fiber'
-import { TextureLoader } from 'three/src/loaders/TextureLoader'
 import Coin from '../components/Coin';
 import { useEffect, useState } from 'react';
 import BetPanel from '../components/BetPanel';
 import Reveal from '../components/Reveal';
 import ninjaFlipJson from '../utils/NinjaFlip.json';
+
+import { useAccount } from 'wagmi';
+
 const { ethers } = require("ethers");
 
 
-function Casino({walletConnected,isWalletConnected,getRamblingBalance,setRamblingBalance,currentAccount}) {
+function Casino({getRamblingBalance,setRamblingBalance}) {
+
+  const { address, isConnected } = useAccount();
 
   const [playerState,setPlayerState]=useState(0);
   const [choose,setChoose]=useState("0");
@@ -59,7 +62,7 @@ function Casino({walletConnected,isWalletConnected,getRamblingBalance,setRamblin
 
   useEffect(()=>{    
     async function initPlayerState(){
-      if(!(await isWalletConnected())){
+      if(!isConnected){
         setMsg('Please connect the wallet...');
       }
       else{
@@ -68,7 +71,7 @@ function Casino({walletConnected,isWalletConnected,getRamblingBalance,setRamblin
       }
     }
     initPlayerState();
-  },[currentAccount]);
+  },[isConnected]);
 
   return (
     <div className='Casino'>
@@ -84,7 +87,7 @@ function Casino({walletConnected,isWalletConnected,getRamblingBalance,setRamblin
         <div className='BetInfo'> &#129399;: <a>{msg}</a> </div>
         
         
-        { walletConnected
+        { isConnected
         ?
         ((playerState!=1) && <BetPanel 
           setPlayerState={setPlayerState} 
@@ -96,7 +99,6 @@ function Casino({walletConnected,isWalletConnected,getRamblingBalance,setRamblin
           getRamblingBalance={getRamblingBalance}
           getPlayerState={getPlayerState}
           setRamblingBalance={setRamblingBalance}
-          currentAccount={currentAccount}
           txProgress={txProgress}
           setTxProgress={setTxProgress}
           isWaiting={isWaiting}

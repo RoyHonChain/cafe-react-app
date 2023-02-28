@@ -8,7 +8,7 @@ export default function Post(props) {
         <div>
           {post.metadata.content}
         </div>
-        <div style = {{ marginTop: '7px'}}>
+        <div style = {{ marginTop: '7px', borderTop: '1px solid grey'}}>
           {shortTime}
         </div>    
       </div>

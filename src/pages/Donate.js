@@ -1,39 +1,24 @@
 import abi from '../utils/BuyMeACoffee.json';
-import { useEffect, useState } from "react";
+import { useRef, useState } from "react";
+import { useContractRead } from 'wagmi';
+
 const { ethers } = require("ethers");
 
 
-function Donate({currentAccount,setCurrentAccount}) {
+function Donate() {
     
     const contractAddress = "0xc3A08d77B529eCd2B5a8c9254B7b7adE92375efA";
     const contractABI = abi.abi;
 
-    const [name, setName] = useState("");
-    const [message, setMessage] = useState("");
     const [memos, setMemos] = useState([]);
 
-    const onNameChange = (event) => {setName(event.target.value);}
-    const onMessageChange = (event) => {setMessage(event.target.value);}
+    const name = useRef("");
+    const message = useRef("");
+    
+    const onNameChange = (event) => {name.current=event.target.value;}
+    const onMessageChange = (event) => {message.current=event.target.value;}
 
-    // Wallet connection logic
-    const isWalletConnected = async () => {
-        try {
-            const { ethereum } = window;
-
-            const accounts = await ethereum.request({method: 'eth_accounts'})
-            console.log("accounts: ", accounts);
-
-            if (accounts.length > 0) {
-                const account = accounts[0];
-                console.log("wallet is connected! " + account);
-            } else {
-                console.log("make sure MetaMask is connected");
-            }
-        } catch (error) {
-            console.log("error: ", error);
-        }
-    }
-
+    
     const buyCoffee = async (amount) => {
         try {
           const {ethereum} = window;
@@ -49,8 +34,8 @@ function Donate({currentAccount,setCurrentAccount}) {
     
             console.log("buying coffee..")
             const coffeeTxn = await buyMeACoffee.buyCoffee(
-              name ? name : "anon",
-              message ? message : "Enjoy your coffee!",
+              name.current ? name.current : "anon",
+              message.current ? message.current : "Enjoy your coffee!",
               {value: ethers.utils.parseEther(amount)}
             );
     
@@ -59,81 +44,30 @@ function Donate({currentAccount,setCurrentAccount}) {
             console.log("mined ", coffeeTxn.hash);
     
             console.log("coffee purchased!");
+            getMemos();
             // Clear the form fields.
-            setName("");
-            setMessage("");
+            name.current="";
+            message.current="";
           }
         } catch (error) {
           console.log(error);
         }
     };
     
-    // Function to fetch all memos stored on-chain.
-    const getMemos = async () => {
-        try {
-            const { ethereum } = window;
-            if (ethereum) {
-                const provider = new ethers.providers.Web3Provider(ethereum);
-                const signer = provider.getSigner();
-                const buyMeACoffee = new ethers.Contract(
-                    contractAddress,
-                    contractABI,
-                    signer
-                );
-                console.log("fetching memos from the blockchain..");
-                const memos = await buyMeACoffee.getMemos();
-                console.log("fetched!");
-                setMemos(memos);
-            } else {
-                console.log("Metamask is not connected");
-            }
-        } catch (error) {
-            console.log(error);
-        }
-    };
 
-    useEffect(() => {
-        let buyMeACoffee;
-        isWalletConnected();
-        getMemos();
-    
-        // Create an event handler function for when someone sends
-        // us a new memo.
-        const onNewMemo = (from, timestamp, name, message,amount) => {
-          console.log("Memo received: ", from, timestamp, name, message,amount);
-          setMemos((prevState) => [
-            {
-              address: from,
-              timestamp: new Date(timestamp * 1000),
-              message,
-              name,
-              amount
-            },
-            ...prevState
-          ]);
-        };
-    
-        const {ethereum} = window;
-    
-        // Listen for new memo events.
-        if (ethereum) {
-          const provider = new ethers.providers.Web3Provider(ethereum, "any");
-          const signer = provider.getSigner();
-          buyMeACoffee = new ethers.Contract(
-            contractAddress,
-            contractABI,
-            signer
-          );
-    
-          buyMeACoffee.on("NewMemo", onNewMemo);
-        }
-    
-        return () => {
-          if (buyMeACoffee) {
-            buyMeACoffee.off("NewMemo", onNewMemo);
-          }
-        }
-      }, [currentAccount]);
+    const { data, refetch:getMemos } = useContractRead({
+      address: contractAddress,
+      abi: contractABI,
+      functionName: 'getMemos',
+      onSuccess(data) {
+        console.log('Success', data)
+        let tempData = [...data];
+        setMemos(tempData.reverse());
+      },
+      onError(error) {
+        console.log('Error', error)
+      },
+    })
     
     return (
     <div className='Donate'>
@@ -161,10 +95,11 @@ function Donate({currentAccount,setCurrentAccount}) {
             
         </div>
 
-        <div>
-            {currentAccount && (<div className={`text-center text-base-2 `}>Memo Received:</div>)}
+        <div className='ReceivedMemos'>
+          <div style={{textAlign: "center",fontSize: "18px"}}>Memo Received(Newest 16):</div>
             <div className="Memos">
-                {currentAccount && (memos.map((memo,idx)=>{
+                {(memos.map((memo,idx)=>{
+                  if(idx<=15)
                     return (
                         <div key={idx} className="Memo">
                         <p style={{"fontWeight":"bold"}}>{memo.message}</p>
