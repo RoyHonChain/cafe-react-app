@@ -48,8 +48,12 @@
   position:absolute;
   top:50px;
   right: 0px;
-
   font-size: 1.15rem;
+  cursor: pointer;
+}
+
+.playerBalance:hover{
+  text-decoration: underline;
 }
 
 .Casino{

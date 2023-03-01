@@ -60,7 +60,7 @@ function TopHeader({ramblingBalance,setRamblingBalance,getRamblingBalance}) {
         <div className='ConnectWallet'>
           <button className='AirdropTokenBtn' disabled={isConnected?false:true} onClick={()=>{airdrop?.()}} >{txLoading ? "Airdroping..." : "Airdrop 100$R"}</button>
           <ConnectButton showBalance={false} accountStatus="address"/>
-          {isConnected && <div className='playerBalance'>Balance: {ramblingBalance} $R</div>}
+          {isConnected && <div className='playerBalance' onClick={()=>{refreshBalance?.()}}>Balance: {ramblingBalance} $R</div>}
         </div>
     </div>
   );
