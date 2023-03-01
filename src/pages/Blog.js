@@ -22,7 +22,6 @@ function Blog() {
   return (
     <div className='Blog'>
         <div className="banner-text">Blog powered by Lens</div>
-        <div>頁面施工中...</div>
         <Profile profile={data.profile} displayFullProfile={true} />
           {data.publications.items.map((post, idx) => {
             return <Post key={idx} post={post}/>;

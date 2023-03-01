@@ -4,13 +4,29 @@ export default function Post(props) {
     const time = post.createdAt;
     const shortTime = time.slice(0,10);
     return (
-      <div className="Post">
-        <div>
-          {post.metadata.content}
+      <div style={{ position:'relative' }}>
+
+        <div className="Post">
+          <div>
+            {post.metadata.content}
+          </div>
+          <div style={{ marginTop: '15px', borderBottom: '1px solid grey' }}></div>
+          <div style = {{ marginTop: '7px'}}>
+            {shortTime}
+          </div>
         </div>
-        <div style = {{ marginTop: '7px', borderTop: '1px solid grey'}}>
-          {shortTime}
-        </div>    
+
+        <div className="PostShadow">
+          <div>
+            {post.metadata.content}
+          </div>
+          <div style={{ marginTop: '15px', borderBottom: '1px solid grey' }}></div>
+          <div style = {{ marginTop: '7px'}}>
+            {shortTime}
+          </div>
+        </div>
+        
       </div>
+
     );
   }
